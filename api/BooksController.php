@@ -1,9 +1,9 @@
 <?php
-include 'CRUDController.php';
+require_once 'CRUDController.php';
 class BooksController extends CRUDController
 {
     private $conn;
-    public $controller;
+    private $controller;
 
     public function __construct($conn)
     {
@@ -102,6 +102,33 @@ class BooksController extends CRUDController
             return $this->controller->readByValue('favorites', $valname, $value, $limit);
         } else {
             return $this->controller->readByValue('favorites', $valname, $value, null);
+        }
+    }
+
+    public function getBorrowedBooksById($borrowed, $limit)
+    {
+        if ($limit != null) {
+            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], $limit);
+        } else {
+            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], null);
+        }
+    }
+
+    public function getFavoritedBooksById($favorited, $limit)
+    {
+        if ($limit != null) {
+            return $this->controller->readByValue('books', 'id', $favorited[0]['book_id'], null);
+        } else {
+            return $this->controller->readByValue('books', 'id', $favorited[0]['book_id'], null);
+        }
+    }
+
+    public function getAllBorrowedBooks($borrowed, $limit)
+    {
+        if ($limit != null) {
+            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], $limit);
+        } else {
+            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], null);
         }
     }
 }

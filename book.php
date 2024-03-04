@@ -1,6 +1,6 @@
 <main>
-  <?php include "api/config.php"; ?>
-  <?php include "api/BooksController.php"; ?>
+  <?php require "api/config.php"; ?>
+  <?php require "api/BooksController.php"; ?>
   <?php $controller = new BooksController($conn); ?>
   <?php $book=$controller->getBooksByValue('id', $_GET['id'], null); ?>
   <div class="title">
@@ -25,7 +25,18 @@
         </div>
       <?php } elseif($_SESSION['level'] == 2) { ?>
         <div class="option">
-          <img src="assets/favorite-blank.svg" style="margin-top: 38px"><font color="#555">7</font>
+          <img src="assets/favorite-blank.svg" style="margin-right: 8px; width: 24px;"><font color="#555" style="margin-top: 33px">
+            <?php
+              $favorites = $controller->getFavoritedBooks(null);
+              $favoritesCount = 0;
+              foreach ($favorites as $favorite) {
+                if ($favorite['book_id'] == $_GET['id']) {
+                  $favoritesCount++;
+                }
+              }
+              echo $favoritesCount;
+            ?>
+          </font>
           <button id='edit' style='margin: 25px; margin-right: 10px;' class='edit'>Edit</button>
           <button id='delete' style='margin: 25px; margin-left: 10px;' class='delete'>Delete</button>
         </div>
@@ -75,23 +86,34 @@
     console.error(reason);
   });
 </script>
+
+<script>
+  setInterval(function() {
+    localStorage.setItem("timeReading", parseInt(localStorage.getItem('timeReading')) + 1);
+  }, 1000)
+</script>
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; max-width: 100vw;">
   <?php
-  $sql = "SELECT * FROM borrows WHERE book_id = " . $book[0]['id'] . " AND user_id = " . $_SESSION['id'];
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0) {
-    for ($i = 1; $i <= $book[0]['pages']; $i++) {
-      echo '<canvas id="page_' . $i . '"></canvas>';
-    }
+  if (isset($_SESSION['id'])) {
+    $sql = "SELECT * FROM borrows WHERE book_id = " . $book[0]['id'] . " AND user_id = " . $_SESSION['id'];
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+      for ($i = 1; $i <= $book[0]['pages']; $i++) {
+        echo '<canvas id="page_' . $i . '"></canvas>';
+      }
+    } else {
+      for ($i = 1; $i <= 20; $i++) {
+        echo '<canvas id="page_' . $i . '"></canvas>';
+      }
+      if($_SESSION['level'] == 1) {
+        echo '<p style="color: #009">(pinjam buku untuk membaca lebih lanjut)</p>';
+      }
+    } 
   } else {
     for ($i = 1; $i <= 20; $i++) {
       echo '<canvas id="page_' . $i . '"></canvas>';
     }
-    if(!isset($_SESSION['level'])) {
-      echo '<p style="color: #009">(login untuk membaca lebih lanjut)</p>';
-    } elseif($_SESSION['level'] == 1) {
-      echo '<p style="color: #009">(pinjam buku untuk membaca lebih lanjut)</p>';
-    }
+    echo '<p style="color: #009">(login untuk membaca lebih lanjut)</p>';
   }
   ?>
 </div>

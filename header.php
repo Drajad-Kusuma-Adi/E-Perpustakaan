@@ -13,6 +13,9 @@
             <input type="submit" value="Search" hidden>
         </label>
     </form>
+    <script>
+        let dropdownOpen;
+    </script>
     <?php
         if (isset($_SESSION['level'])) {
             switch ($_SESSION['level']) {
@@ -20,7 +23,7 @@
                     <div class="dropdown">
                         <div>
                             <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($_SESSION['image']) . '" width="200" height="300"/>' ?>
-                            <button class="dropdown-button" id="dropdown-button"><img src="assets/arrow.svg" alt="arrow"></button>
+                            <button onclick="openDropdown()" class="dropdown-button" id="dropdown-button"><img src="assets/arrow.svg" alt="arrow"></button>
                         </div>
                         <ul id="dropdown-content" style="margin-top: 240px;" class="dropdown-content hidden">
                             <li><a href="./?page=profile">Profile <img src="assets/profile.svg" alt="profile" style="width: 16px; height: 16px;"></a></li>
@@ -29,13 +32,19 @@
                         </ul>
                     </div>
                     <script>
-                        document.querySelector('#dropdown-button').addEventListener('click', function() {
-                            if (document.querySelector('#dropdown-content').classList.contains('hidden')) {
-                                document.querySelector('#dropdown-content').classList.remove('hidden');
-                            } else {
+                        dropdownOpen = false;
+                        window.onclick = function(event) {
+                            if (dropdownOpen === true) {
                                 document.querySelector('#dropdown-content').classList.add('hidden');
+                                dropdownOpen = false;
                             }
-                        });
+                        }
+                        function openDropdown() {
+                            document.querySelector('#dropdown-content').classList.remove('hidden');
+                            setTimeout(function() {
+                                dropdownOpen = true;
+                            }, 10);
+                        };
                     </script>
                 <?php
                 break;
@@ -43,7 +52,7 @@
                     <div class="dropdown" style="margin: 24px;">
                         <div>
                             <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($_SESSION['image']) . '" width="200" height="300"/>' ?>
-                            <button class="dropdown-button" id="dropdown-button"><img src="assets/arrow.svg" alt="arrow"></button>
+                            <button onclick="openDropdown()" class="dropdown-button" id="dropdown-button"><img src="assets/arrow.svg" alt="arrow"></button>
                         </div>
                         <ul id="dropdown-content" style="margin-top: 160px;" class="dropdown-content hidden">
                             <li><a href="./?page=profile">Profile <img src="assets/profile.svg" alt="profile" style="width: 16px; height: 16px;"></a></li>
@@ -51,13 +60,19 @@
                         </ul>
                     </div>
                     <script>
-                        document.querySelector('#dropdown-button').addEventListener('click', function() {
-                            if (document.querySelector('#dropdown-content').classList.contains('hidden')) {
-                                document.querySelector('#dropdown-content').classList.remove('hidden');
-                            } else {
+                        dropdownOpen = false;
+                        window.onclick = function(event) {
+                            if (dropdownOpen === true) {
                                 document.querySelector('#dropdown-content').classList.add('hidden');
+                                dropdownOpen = false;
                             }
-                        });
+                        }
+                        function openDropdown() {
+                            document.querySelector('#dropdown-content').classList.remove('hidden');
+                            setTimeout(function() {
+                                dropdownOpen = true;
+                            }, 10);
+                        };
                     </script>
                 <?php
                 break;

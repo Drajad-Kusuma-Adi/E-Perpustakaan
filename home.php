@@ -1,5 +1,5 @@
 <main>
-  <?php include "api/BooksController.php" ?>
+  <?php require "api/BooksController.php" ?>
   <?php $controller = new BooksController($conn); ?>
 
   <?php
@@ -34,23 +34,27 @@
     if ($_SESSION['level'] == 1) {
       // Display books being currently borrowed
       echo('<p style="color: #555">Kamu sedang meminjam beberapa buku berikut:</p>');
-      $controller->display_books($controller->getBorrowedBooksByValue('user_id', $_SESSION['id'], 10));
+      $controller->display_books($controller->getBorrowedBooksById($controller->getBorrowedBooksByValue('user_id', $_SESSION['id'], null), null));
 
       // Display favorite books
       echo('<p style="color: #555">Kamu telah memfavoritkan beberapa buku ini:</p>');
-      // $controller->display_books($controller->);
+      $controller->display_books($controller->getFavoritedBooksById($controller->getFavoritedBooksByValue('user_id', $_SESSION['id'], null), null));
+      
+      echo('<p style="color: #555">Berikut beberapa buku yang kami rekomendasikan untuk kamu baca:</p>');
+      $controller->display_books($books);
     } 
     elseif ($_SESSION['level'] == 2) {
       // Display list of books
       echo('<p style="color: #555">List buku-buku yang ada saat ini:</p>');
-      // $controller->display_books($controller->); 
+      $controller->display_books($books);
 
       // Display books currently being borrowed
       echo('<p style="color: #555">List buku-buku yang masih dipinjam saat ini:</p>');
-      // $controller->display_books($controller->); 
+      $controller->display_books($controller->getAllBorrowedBooks($controller->getBorrowedBooks(null), null));
     } 
+  } else {
+    echo('<p style="color: #555">Berikut beberapa buku yang kami rekomendasikan untuk kamu baca:</p>');
+    $controller->display_books($books);
   }
-  echo('<p style="color: #555">Berikut beberapa buku yang kami rekomendasikan untuk kamu baca:</p>');
-  $controller->display_books($books);
   ?> 
 </main>
