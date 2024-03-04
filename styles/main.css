@@ -1,0 +1,380 @@
+@keyframes green-button-hover {
+  0% {
+    background-color: #10A37F;
+    color: #fff;
+  }
+  100% {
+    background-color: #096850;
+    color: #fff;
+  }
+}
+@keyframes white-button-hover {
+  0% {
+    background-color: #fff;
+    color: #000;
+  }
+  100% {
+    background-color: #10A37F;
+    color: #fff;
+  }
+}
+@keyframes reverse-green-button-hover {
+  0% {
+    background-color: #096850;
+    color: #fff;
+  }
+  100% {
+    background-color: #10A37F;
+    color: #fff;
+  }
+}
+@keyframes reverse-white-button-hover {
+  0% {
+    background-color: #10A37F;
+    color: #fff;
+  }
+  100% {
+    background-color: #fff;
+    color: #000;
+  }
+}
+@keyframes red-button-hover {
+  0% {
+    background-color: #F92E2E;
+    color: #fff;
+  }
+  100% {
+    background-color: #C90000;
+    color: #fff;
+  }
+}
+@keyframes reverse-red-button-hover {
+  0% {
+    background-color: #C90000;
+    color: #fff;
+  }
+  100% {
+    background-color: #F92E2E;
+    color: #fff;
+  }
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  position: relative;
+  width: 100vw;
+  font-family: "Poppins", sans-serif;
+  background-color: #f9f9f9;
+}
+
+.navbar {
+  z-index: 999;
+  background-color: #fff;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.navbar img {
+  margin-right: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+}
+.navbar h1 {
+  font-weight: 500;
+  font-size: 24px;
+  text-decoration: none;
+  color: #000;
+}
+.navbar .login {
+  border-radius: 10px;
+  border-color: #10A37F;
+  background-color: #fff;
+  color: #000;
+  padding: 16px 32px 16px 32px;
+  margin-top: 16px;
+  animation: reverse-white-button-hover 0.5s forwards;
+}
+.navbar .login:hover {
+  cursor: pointer;
+  background-color: #10A37F;
+  color: #fff;
+  animation: white-button-hover 0.5s forwards;
+}
+.navbar .dropdown {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 24px;
+  margin-right: 24px;
+  border: 2px solid #555;
+  padding: 8px 16px 8px 16px;
+  border-radius: 10px;
+}
+.navbar .dropdown div img {
+  width: 32px;
+  height: 32px;
+}
+.navbar .dropdown .dropdown-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+}
+.navbar .dropdown .dropdown-button img {
+  margin: 0;
+  width: 16px;
+}
+.navbar .dropdown .dropdown-button:hover {
+  cursor: pointer;
+}
+.navbar .dropdown .dropdown-content {
+  position: absolute;
+  background-color: #fff;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transform: translateX(-100px);
+  list-style: none;
+}
+.navbar .dropdown .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar form {
+  padding: 0;
+  margin-left: 8px;
+  margin-right: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border-color: #10A37F;
+  background-color: #10A37F;
+}
+.navbar form .search {
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: #10A37F;
+  padding: 8px;
+  margin: 8px;
+}
+.navbar form .search-button {
+  width: 40px;
+  height: 25px;
+}
+.navbar form .search-button:hover {
+  cursor: pointer;
+}
+
+.login-form {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.login-form form {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  flex-direction: column;
+  width: fit-content;
+  padding: 24px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+.login-form form label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: large;
+}
+.login-form form div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.login-form form div img {
+  padding: 8px;
+}
+.login-form form div .form-input {
+  padding: 8px;
+}
+.login-form form div .form-button {
+  padding: 8px 24px 8px 24px;
+  margin: 16px 8px 16px 8px;
+  border-radius: 5px;
+}
+.login-form form div .form-button input {
+  background-color: transparent;
+  border: transparent;
+}
+.login-form form div .form-button input:hover {
+  cursor: pointer;
+}
+.login-form form div .login {
+  background-color: #10A37F;
+  animation: reverse-green-button-hover 0.5s forwards;
+  border: 1px solid black;
+}
+.login-form form div .login input {
+  color: white;
+}
+.login-form form div .login:hover {
+  cursor: pointer;
+  animation: green-button-hover 0.5s forwards;
+}
+.login-form form div .login:hover input {
+  animation: green-button-hover 0.5s forwards;
+}
+.login-form form div .reset {
+  background-color: #f9f9f9;
+  border: 1px solid black;
+  animation: reverse-white-button-hover 0.5s forwards;
+}
+.login-form form div .reset:hover {
+  cursor: pointer;
+  animation: white-button-hover 0.5s forwards;
+}
+.login-form form div .reset:hover input {
+  color: white;
+}
+.login-form form .form-group {
+  background-color: #fff;
+}
+.login-form form .form-group img {
+  background-color: transparent;
+  border: 1px solid #555;
+  border-right: 0;
+}
+.login-form form .form-group input {
+  background-color: transparent;
+  border: 1px solid #555;
+}
+
+main {
+  margin: 50px;
+}
+main .books-container {
+  box-shadow: inset 0px 5px 5px 0.5px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  overflow-x: scroll;
+  z-index: 1;
+}
+main .books-container .bookcard {
+  position: relative;
+  float: left;
+  width: 200px;
+  height: 500px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 20px;
+  border-color: #000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: #f9f9f9;
+}
+main .books-container .bookcard .baca {
+  position: absolute;
+  bottom: 0;
+  transform: translateY(-10px);
+  width: 200px;
+  border-radius: 10px;
+  border-color: #10A37F;
+  background-color: #10A37F;
+  padding: 15px 30px 15px 30px;
+  animation: reverse-green-button-hover 0.5s forwards;
+}
+main .books-container .bookcard .baca:hover {
+  cursor: pointer;
+  background-color: #10A37F;
+  color: #fff;
+  animation: green-button-hover 0.5s forwards;
+}
+main .title img {
+  float: left;
+  margin-right: 10px;
+}
+main .title p {
+  margin-bottom: 20px;
+}
+main .title .option {
+  float: right;
+  display: flex;
+  flex-wrap: nowrap;
+}
+main .title .option .pinjam {
+  border-radius: 10px;
+  border-color: #10A37F;
+  background-color: #fff;
+  color: #000;
+  padding: 12px 24px 12px 24px;
+  animation: reverse-white-button-hover 0.5s forwards;
+}
+main .title .option .pinjam:hover {
+  cursor: pointer;
+  background-color: #10A37F;
+  color: #fff;
+  animation: white-button-hover 0.5s forwards;
+}
+main .title .option .edit {
+  border-radius: 10px;
+  border-color: #10A37F;
+  background-color: #fff;
+  color: #000;
+  padding: 12px 24px 12px 24px;
+  animation: reverse-white-button-hover 0.5s forwards;
+}
+main .title .option .edit:hover {
+  cursor: pointer;
+  background-color: #10A37F;
+  color: #fff;
+  animation: white-button-hover 0.5s forwards;
+}
+main .title .option .delete {
+  border-radius: 10px;
+  border-color: #F92E2E;
+  background-color: #F92E2E;
+  color: #000;
+  padding: 12px 24px 12px 24px;
+  animation: reverse-red-button-hover 0.5s forwards;
+}
+main .title .option .delete:hover {
+  cursor: pointer;
+  background-color: #F92E2E;
+  color: #fff;
+  animation: red-button-hover 0.5s forwards;
+}
+
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=main.css.map */
