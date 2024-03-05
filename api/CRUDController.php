@@ -7,13 +7,6 @@
         }
 
         // CRUD Operations
-        public function create($table, $columns, $data) {
-            $sql = "INSERT INTO $table ($columns) VALUES ($data)";
-            $result = $this->conn->query($sql);
-            if (!$result) {
-                return "Request failed to send, please try again";
-            }
-        }
         public function readMultiple($table, $limit) {
             if ($limit != null) {
                 $sql = "SELECT * FROM $table LIMIT $limit";
@@ -51,6 +44,13 @@
                 return "Request failed to send, please try again";
             } else {
                 return $result->fetch_all(MYSQLI_ASSOC);
+            }
+        }
+        public function create($table, $columns, $data) {
+            $sql = "INSERT INTO $table ($columns) VALUES ($data)";
+            $result = $this->conn->query($sql);
+            if (!$result) {
+                return "Request failed to send, please try again";
             }
         }
         public function update($table, $columns, $data) {

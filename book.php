@@ -3,12 +3,55 @@
   <?php require "api/BooksController.php"; ?>
   <?php $controller = new BooksController($conn); ?>
   <?php $book=$controller->getBooksByValue('id', $_GET['id'], null); ?>
+  <?php 
+  if(isset($_POST['pinjam'])){
+    $controller->createBorrowedBook($_SESSION['id'], $book[0]['id']);
+  }
+  if(isset($_POST['kembali'])){
+    $controller->deleteBorrowedBook($_SESSION['id'], $book[0]['id']);
+  }
+  if(isset($_POST['favorite'])){
+    $controller->createFavoritedBook($_SESSION['id'], $book[0]['id']);
+  }
+  if(isset($_POST['unfavorite'])){
+    $controller->deleteFavoritedBook($_SESSION['id'], $book[0]['id']);
+  }
+  ?>
+  <style>
+    .heart {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-repeat: no-repeat;
+      background-size: contain;
+      cursor: pointer;
+      text-indent: -9999px;
+    }
+    .favorite {
+      background-image: url('assets/favorite-blank.svg');
+    }
+    .unfavorite {
+      background-image: url('assets/favorite-full.svg');
+    }
+  </style>
   <div class="title">
     <?php if(isset($_SESSION['level'])) {
       if($_SESSION['level'] == 1) { ?>
         <div class="option">
           <div style="display: flex; justify-content: center; align-items: center">
-            <img src="assets/favorite-blank.svg" style="margin-right: 8px; width: 24px;"><font color="#555">
+            <form method="post">
+              <?php
+              $sql = "SELECT * FROM favorites WHERE book_id = " . $book[0]['id'] . " AND user_id = " . $_SESSION['id'];
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) { ?>
+                <input type='submit' name="unfavorite" id='unfavorite' style='margin: 5px;' class='heart unfavorite'>
+                <!-- <img src='assets/favorite-full.svg' style='margin-right: 8px; width: 24px;'> -->
+              <?php } else { ?>
+                <input type='submit' name="favorite" id='favorite' style='margin: 5px' class='heart favorite'>
+                <!-- <img src='assets/favorite-blank.svg' style='margin-right: 8px; width: 24px;'> -->
+              <?php } ?>
+            </form>
+            <font color="#555">
               <?php
                 $favorites = $controller->getFavoritedBooks(null);
                 $favoritesCount = 0;
@@ -21,11 +64,32 @@
               ?>
             </font>
           </div>
-          <button id='pinjam' style='margin: 25px;' class='pinjam'>Pinjam</button>
+          <form method="post">
+            <?php
+            $sql = "SELECT * FROM borrows WHERE book_id = " . $book[0]['id'] . " AND user_id = " . $_SESSION['id'];
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) { ?>
+              <input type='submit' name="kembali" id='kembali' style='margin: 25px;' class='pinjam' value='Kembalikan'>
+            <?php } else { ?>
+              <input type='submit' name="pinjam" id='pinjam' style='margin: 25px;' class='pinjam' value='Pinjam'>
+            <?php } ?>
+          </form>
         </div>
       <?php } elseif($_SESSION['level'] == 2) { ?>
         <div class="option">
-          <img src="assets/favorite-blank.svg" style="margin-right: 8px; width: 24px;"><font color="#555" style="margin-top: 33px">
+          <form method="post">
+            <?php
+            $sql = "SELECT * FROM favorites WHERE book_id = " . $book[0]['id'] . " AND user_id = " . $_SESSION['id'];
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) { ?>
+              <input type='submit' name="unfavorite" id='unfavorite' style='margin: 5px; margin-top: 35px' class='heart unfavorite'>
+              <!-- <img src='assets/favorite-full.svg' style='margin-right: 8px; width: 24px;'> -->
+            <?php } else { ?>
+              <input type='submit' name="favorite" id='favorite' style='margin: 5px; margin-top: 35px' class='heart favorite'>
+              <!-- <img src='assets/favorite-blank.svg' style='margin-right: 8px; width: 24px;'> -->
+            <?php } ?>
+          </form>
+          <font color="#555" style="margin-top: 33px">
             <?php
               $favorites = $controller->getFavoritedBooks(null);
               $favoritesCount = 0;
