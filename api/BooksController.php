@@ -11,10 +11,16 @@ class BooksController extends CRUDController
         $this->controller = new CRUDController($conn);
     }
 
-    public function display_books($books, $page = 'book')
+    public function display_books($books, $page = 'book', $state = null)
     {
         if (empty($books)) {
-            echo "<p style='color: #555'>Mohon maaf! Tidak ada hasil pencarian yang sesuai.</p>";
+            if($state == "pinjam") {
+                echo "<p style='color: #555'>Tidak ada buku yang dipinjam.</p>";
+            } elseif($state == "favorite") {
+                echo "<p style='color: #555'>Tidak ada buku yang difavoritkan.</p>";
+            } else {
+                echo "<p style='color: #555'>Mohon maaf! Tidak ada hasil pencarian yang sesuai.</p>";
+            }
             return;
         }
 
@@ -107,28 +113,46 @@ class BooksController extends CRUDController
 
     public function getBorrowedBooksById($borrowed, $limit)
     {
-        if ($limit != null) {
-            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], $limit);
-        } else {
-            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], null);
+        $books=[];
+        foreach ($borrowed as $borrow) {
+            $bookid = $borrow['book_id'];
+            if ($limit != null) {
+                $books = array_merge($books, $this->controller->readByValue('books', 'id', $bookid, $limit));
+            } else {
+                $books = array_merge($books, $this->controller->readByValue('books', 'id', $bookid, null));
+            }
         }
+        return $books;
     }
 
     public function getFavoritedBooksById($favorited, $limit)
     {
-        if ($limit != null) {
-            return $this->controller->readByValue('books', 'id', $favorited[0]['book_id'], null);
-        } else {
-            return $this->controller->readByValue('books', 'id', $favorited[0]['book_id'], null);
+        $books=[];
+        foreach ($favorited as $favorite) {
+            $bookid = $favorite['book_id'];
+            if ($limit != null) {
+                $books = array_merge($books, $this->controller->readByValue('books', 'id', $bookid, $limit));
+            } else {
+                $books = array_merge($books, $this->controller->readByValue('books', 'id', $bookid, null));
+            }
         }
+        return $books;
     }
 
-    public function getAllBorrowedBooks($borrowed, $limit)
+    public function createBorrowedBook($userid, $bookid)
     {
-        if ($limit != null) {
-            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], $limit);
-        } else {
-            return $this->controller->readByValue('books', 'id', $borrowed[0]['book_id'], null);
-        }
+        $this->controller->create('borrows', 'user_id, book_id', "'$userid', '$bookid'");
+    }
+    public function deleteBorrowedBook($userid, $bookid)
+    {
+        $this->controller->delete('borrows', '(user_id, book_id)', "('$userid', '$bookid')");
+    }
+    public function createFavoritedBook($userid, $bookid)
+    {
+        $this->controller->create('favorites', 'user_id, book_id', "'$userid', '$bookid'");
+    }
+    public function deleteFavoritedBook($userid, $bookid)
+    {
+        $this->controller->delete('favorites', '(user_id, book_id)', "('$userid', '$bookid')");
     }
 }
