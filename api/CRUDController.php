@@ -53,8 +53,18 @@
                 return "Request failed to send, please try again";
             }
         }
-        public function update($table, $columns, $data) {
-            $sql = "UPDATE $table SET $columns = $data";
+        public function update($table, $updates) {
+            $setClause = "";
+            foreach ($updates as $column => $value) {
+                if ($setClause !== "") {
+                    $setClause .= ", ";
+                }
+                if (is_string($value)) {
+                    $value = "'" . addslashes($value) . "'";
+                }
+                $setClause .= "$column = $value";
+            }
+            $sql = "UPDATE $table SET $setClause";
             $result = $this->conn->query($sql);
             if (!$result) {
                 return "Request failed to send, please try again";

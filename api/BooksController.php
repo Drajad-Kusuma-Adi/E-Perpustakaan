@@ -14,7 +14,7 @@ class BooksController extends CRUDController
     public function display_books($books, $page = 'book', $state = null)
     {
         if (empty($books)) {
-            if($state == "pinjam") {
+            if($state == "pinjam" || $state == "pinjamAdmin") {
                 echo "<p style='color: #555'>Tidak ada buku yang dipinjam.</p>";
             } elseif($state == "favorite") {
                 echo "<p style='color: #555'>Tidak ada buku yang difavoritkan.</p>";
@@ -25,17 +25,27 @@ class BooksController extends CRUDController
         }
 
         echo "<div class='books-container'>";
+        if($state == "create") {
+            echo "<div class='bookcard'>";
+            echo "<button id='createButton' style='margin: 24px;' class='create'>+Tambahkan Buku</button>";
+            echo "</div>";
+        }
         foreach ($books as $book) {
-            if($state != "create") {
+            if($state == "pinjamAdmin") {
+                $bookid=$this->controller->readByValue('borrows', 'book_id', $book['id'], null);
+                $userid=$this->controller->readByValue('users', 'id', $bookid[0]['user_id'], null);
+                echo "<div class='bookcard'>";
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
+                echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
+                echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
+                echo "<a href='?kbl&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Kembalikan<br>(dipinjam oleh ".$userid[0]['username'].")</button></a>";
+                echo "</div>";
+            } else {
                 echo "<div class='bookcard'>";
                 echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
                 echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
                 echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
                 echo "<a href='?page=$page&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Baca</button></a>";
-                echo "</div>";
-            } else {
-                echo "<div class='bookcard'>";
-                echo "<button id='createButton' style='margin: 24px;' class='create'>+Tambahkan Buku</button>";
                 echo "</div>";
             }
         }

@@ -66,11 +66,35 @@ $red: #F92E2E;
         color: #fff;
     }
 }
-
 // MAIN
 * {
     padding: 0;
     margin: 0;
+}
+
+.profile-read-button {
+    text-decoration: none;
+    padding: 8px 24px 8px 24px;
+    margin: 8px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    animation: reverse-white-button-hover 0.5s forwards;
+}
+.profile-read-button:hover {
+    cursor: pointer;
+    animation: white-button-hover 0.5s forwards;
+}
+.profile-return-button {
+    text-decoration: none;
+    padding: 8px 24px 8px 24px;
+    margin: 8px;
+    border: 1px solid $darkred;
+    border-radius: 5px;
+    animation: reverse-red-button-hover 0.5s forwards;
+}
+.profile-return-button:hover {
+    cursor: pointer;
+    animation: red-button-hover 0.5s forwards;
 }
 
 body {
@@ -367,6 +391,7 @@ body {
             }
 
             .form-input {
+                width: 100%;
                 padding: 8px;
                 // margin: 8px;
             }
@@ -401,6 +426,20 @@ body {
                 }
             }
 
+            .cancel {
+                scale: 80%;
+                background-color: $bgWhite;
+                border: 1px solid black;
+                animation: reverse-white-button-hover 0.5s forwards;
+            }
+            .cancel:hover {
+                cursor: pointer;
+                animation: white-button-hover 0.5s forwards;
+
+                input {
+                    color: white;
+                }
+            }
             .reset {
                 background-color: $bgWhite;
                 border: 1px solid black;
@@ -537,6 +576,19 @@ main {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             background-color: $bgWhite;
 
+            .create {
+                background-color: $bgWhite;
+                position: absolute;
+                transform: translateX(-45px) translateY(-40px);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                border: none;
+                color: $accentGreen;
+                padding: 15px 30px 15px 30px;
+            }
             .baca {
                 position: absolute;
                 bottom: 0;
