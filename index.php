@@ -23,6 +23,10 @@ date_default_timezone_set("Asia/Jakarta");
     } else {
         if (isset($_GET['page'])) {
             switch ($_GET['page']) {
+                case 'home':
+                    $title = "E-Perpustakaan - Dashboard";
+                    include "home.php";
+                    break;
                 case 'book':
                     $title = "E-Perpustakaan - Buku";
                     include "book.php";

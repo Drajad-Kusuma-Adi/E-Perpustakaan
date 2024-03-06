@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <main>
   <?php require "api/config.php"; ?>
   <?php require "api/BooksController.php"; ?>
@@ -15,6 +16,10 @@
   }
   if(isset($_POST['unfavorite'])){
     $controller->deleteFavoritedBook($_SESSION['id'], $book[0]['id']);
+  }
+  if(isset($_POST['delete'])){
+    $controller->deleteBook($book[0]['id']);
+    header("Location: /e-perpustakaan");//delete redirect not working
   }
   ?>
   <style>
@@ -101,8 +106,9 @@
               echo $favoritesCount;
             ?>
           </font>
-          <button id='edit' style='margin: 25px; margin-right: 10px;' class='edit'>Edit</button>
-          <button id='delete' style='margin: 25px; margin-left: 10px;' class='delete'>Delete</button>
+          <form method="post">
+            <input type='submit' name="delete" id='delete' style='margin: 25px; margin-left: 10px;' class='delete' value="Delete" onclick="confirm('Apakah anda yakin?')">
+          </form>
         </div>
       <?php } ?>
     <?php } ?>
@@ -186,3 +192,4 @@
   ?>
 </div>
 </main>
+<?php ob_end_flush(); ?>

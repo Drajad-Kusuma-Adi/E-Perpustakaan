@@ -3,6 +3,10 @@
   <?php $controller = new BooksController($conn); ?>
 
   <?php
+  if(isset($_GET['kbl'])) {
+    $book=$controller->getBorrowedBooksByValue('book_id', $_GET['id'], null);
+    $controller->deleteBorrowedBook($book[0]['user_id'], $_GET['id']);
+  }
   $books = [];
   if (isset($_POST['search'])) {
     $greeting = "Berikut hasil untuk pencarian " . htmlspecialchars($_POST['search']) . ":";
@@ -32,29 +36,31 @@
   echo('<h1>' . $greeting . '</h1>');
   if (isset($_SESSION['level'])) {
     if ($_SESSION['level'] == 1) {
-      // Display books being currently borrowed
       echo('<p style="color: #555">Kamu sedang meminjam beberapa buku berikut:</p>');
       $controller->display_books($controller->getBorrowedBooksById($controller->getBorrowedBooksByValue('user_id', $_SESSION['id'], null), null), 'book', "pinjam");
 
-      // Display favorite books
       echo('<p style="color: #555">Kamu telah memfavoritkan beberapa buku ini:</p>');
       $controller->display_books($controller->getFavoritedBooksById($controller->getFavoritedBooksByValue('user_id', $_SESSION['id'], null), null), 'book', "favorite");
       
       echo('<p style="color: #555">Berikut beberapa buku yang kami rekomendasikan untuk kamu baca:</p>');
-      $controller->display_books($books);
+      $shuffledbooks=$books;
+      shuffle($shuffledbooks);
+      $controller->display_books($shuffledbooks);
     } 
     elseif ($_SESSION['level'] == 2) {
-      // Display list of books
       echo('<p style="color: #555">List buku-buku yang ada saat ini:</p>');
-      $controller->display_books($books, 'book', "create");
+      $sortedbooks=$books;
+      rsort($sortedbooks);
+      $controller->display_books($sortedbooks, 'book', "create");
 
-      // Display books currently being borrowed
       echo('<p style="color: #555">List buku-buku yang masih dipinjam saat ini:</p>');
-      $controller->display_books($controller->getBorrowedBooksById($controller->getBorrowedBooks(null), null), 'book', "pinjam");
+      $controller->display_books($controller->getBorrowedBooksById($controller->getBorrowedBooks(null), null), 'book', "pinjamAdmin");
     } 
   } else {
     echo('<p style="color: #555">Berikut beberapa buku yang kami rekomendasikan untuk kamu baca:</p>');
-    $controller->display_books($books);
+    $shuffledbooks=$books;
+    shuffle($shuffledbooks);
+    $controller->display_books($shuffledbooks);
   }
   ?> 
 </main>
@@ -84,7 +90,7 @@
     </div>
     <label for="pages">Pages</label>
     <div class="form-group">
-      <input class="form-input" type="number" name="pages" id="pages" placeholder="Masukkan pages...">
+      <input class="form-input" type="number" min="1" name="pages" id="pages" placeholder="Masukkan pages...">
     </div>
     <div style="display: flex; justify-content: center;">
       <input class="form-button create" type="submit" value="Create">

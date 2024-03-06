@@ -86,7 +86,7 @@
   <br><br><br>
   <h1>Daftar Buku Dipinjam</h1>
   <br><br>
-  <table id="data-table">
+  <table id="borrows-table">
     <thead>
       <tr>
         <th>No</th>
@@ -95,15 +95,17 @@
         <th>Penulis</th>
       </tr>
     </thead>
-    <tbody id="table-body">
+    <tbody id="borrows-body">
     </tbody>
   </table>
-  <div id="pagination">
-    <button id="prev-btn">Previous</button>
-    <button id="next-btn">Next</button>
+  <div id="borrows-pagination">
+    <button id="borrows-prev-btn">Previous</button>
+    <button id="borrows-next-btn">Next</button>
   </div>
   <script>
-  const data = [
+  const itemsPerPage = 5;
+
+  const borrows = [
     <?php
     foreach ($borrowedBooks as $book) {
       $data = $BooksController->getBooksByValue('id', $book['book_id'], null);
@@ -113,23 +115,21 @@
           title: '" . $data[0]['title'] . "',
           author: '" . $data[0]['author'] . "',
           cover: '" . base64_encode($data[0]['cover']) . "'
-        }
+        },
       ";
     }
     ?>
   ];
+  let borrowsPage = 1;
 
-const itemsPerPage = 5;
-let currentPage = 1;
+function displayBorrowsData() {
+  const borrowsBody = document.getElementById('borrows-body');
+  borrowsBody.innerHTML = '';
 
-function displayTableData() {
-  const tableBody = document.getElementById('table-body');
-  tableBody.innerHTML = '';
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  const startIndex = (borrowsPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const currentPageData = data.slice(startIndex, endIndex);
+  const currentPageData = borrows.slice(startIndex, endIndex);
 
   currentPageData.forEach((item, index) => {
     const row = document.createElement('tr');
@@ -140,16 +140,15 @@ function displayTableData() {
     const authorCell = document.createElement('td');
     const actionCell = document.createElement('td');
     const readButton = document.createElement('a');
-    const returnButton = document.createElement('button');
 
     number.textContent = index + 1;
     image.src = "data:image/jpeg;base64," + item.cover;
     image.alt = item.title;
     titleCell.textContent = item.title;
     authorCell.textContent = item.author;
-    readButton.href = `?page=book?id=${item.id}`;
+    readButton.classList.add('profile-read-button');
+    readButton.href = `?page=book&id=${item.id}`;
     readButton.textContent = "Baca"
-    returnButton.textContent = "Kembalikan"
 
     row.appendChild(number);
     row.appendChild(imageCell);
@@ -158,42 +157,146 @@ function displayTableData() {
     row.appendChild(authorCell);
     row.appendChild(actionCell);
     actionCell.appendChild(readButton);
-    actionCell.appendChild(returnButton);
 
-    tableBody.appendChild(row);
+    borrowsBody.appendChild(row);
   });
 }
 
-function updatePaginationButtons() {
-  const prevButton = document.getElementById('prev-btn');
-  const nextButton = document.getElementById('next-btn');
+function updateBorrowsTable() {
+  const prevButton = document.getElementById('borrows-prev-btn');
+  const nextButton = document.getElementById('borrows-next-btn');
 
-  prevButton.disabled = currentPage === 1;
-  nextButton.disabled = currentPage === Math.ceil(data.length / itemsPerPage);
+  prevButton.disabled = borrowsPage === 1;
+  nextButton.disabled = borrowsPage === Math.ceil(borrows.length / itemsPerPage);
 }
 
-function goToPreviousPage() {
-  if (currentPage > 1) {
-    currentPage--;
-    displayTableData();
-    updatePaginationButtons();
+function borrowsGoToPreviousPage() {
+  if (borrowsPage > 1) {
+    borrowsPage--;
+    displayBorrowsData();
+    updateBorrowsTable();
   }
 }
 
-function goToNextPage() {
-  if (currentPage < Math.ceil(data.length / itemsPerPage)) {
-    currentPage++;
-    displayTableData();
-    updatePaginationButtons();
+function borrowsGoToNextPage() {
+  if (borrowsPage < Math.ceil(borrows.length / itemsPerPage)) {
+    borrowsPage++;
+    displayBorrowsData();
+    updateBorrowsTable();
   }
 }
 
-// Event listeners for pagination buttons
-document.getElementById('prev-btn').addEventListener('click', goToPreviousPage);
-document.getElementById('next-btn').addEventListener('click', goToNextPage);
+document.getElementById('borrows-prev-btn').addEventListener('click', borrowsGoToPreviousPage);
+document.getElementById('borrows-next-btn').addEventListener('click', borrowsGoToNextPage);
 
-// Initial display
-displayTableData();
-updatePaginationButtons();
+displayBorrowsData();
+updateBorrowsTable();
+  </script>
+  <br><br>
+<h1>Daftar Buku Favorit</h1>
+  <br><br>
+<table id="favorites-table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Cover</th>
+        <th>Judul Buku</th>
+        <th>Penulis</th>
+      </tr>
+    </thead>
+    <tbody id="favorites-body">
+    </tbody>
+  </table>
+  <div id="favorites-pagination">
+    <button id="favorites-prev-btn">Previous</button>
+    <button id="favorites-next-btn">Next</button>
+  </div>
+  <script>
+  const favorites = [
+    <?php
+    foreach ($favoritedBooks as $book) {
+      $data = $BooksController->getBooksByValue('id', $book['book_id'], null);
+      echo "
+        {
+          id: '" . $data[0]['id'] . "',
+          title: '" . $data[0]['title'] . "',
+          author: '" . $data[0]['author'] . "',
+          cover: '" . base64_encode($data[0]['cover']) . "'
+        },
+      ";
+    }
+    ?>
+  ];
+  let favoritesPage = 1;
+
+function displayfavoritesData() {
+  const favoritesBody = document.getElementById('favorites-body');
+  favoritesBody.innerHTML = '';
+
+  const startIndex = (favoritesPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const currentPageData = favorites.slice(startIndex, endIndex);
+
+  currentPageData.forEach((item, index) => {
+    const row = document.createElement('tr');
+    const number = document.createElement('td');
+    const imageCell = document.createElement('td');
+    const image = document.createElement('img');
+    const titleCell = document.createElement('td');
+    const authorCell = document.createElement('td');
+    const actionCell = document.createElement('td');
+    const readButton = document.createElement('a');
+
+    number.textContent = index + 1;
+    image.src = "data:image/jpeg;base64," + item.cover;
+    image.alt = item.title;
+    titleCell.textContent = item.title;
+    authorCell.textContent = item.author;
+    readButton.classList.add('profile-read-button');
+    readButton.href = `?page=book&id=${item.id}`;
+    readButton.textContent = "Baca"
+
+    row.appendChild(number);
+    row.appendChild(imageCell);
+    imageCell.appendChild(image);
+    row.appendChild(titleCell);
+    row.appendChild(authorCell);
+    row.appendChild(actionCell);
+    actionCell.appendChild(readButton);
+
+    favoritesBody.appendChild(row);
+  });
+}
+
+function updatefavoritesTable() {
+  const prevButton = document.getElementById('favorites-prev-btn');
+  const nextButton = document.getElementById('favorites-next-btn');
+
+  prevButton.disabled = favoritesPage === 1;
+  nextButton.disabled = favoritesPage === Math.ceil(favorites.length / itemsPerPage);
+}
+
+function favoritesGoToPreviousPage() {
+  if (favoritesPage > 1) {
+    favoritesPage--;
+    displayfavoritesData();
+    updatefavoritesTable();
+  }
+}
+
+function favoritesGoToNextPage() {
+  if (favoritesPage < Math.ceil(favorites.length / itemsPerPage)) {
+    favoritesPage++;
+    displayfavoritesData();
+    updatefavoritesTable();
+  }
+}
+
+document.getElementById('favorites-prev-btn').addEventListener('click', favoritesGoToPreviousPage);
+document.getElementById('favorites-next-btn').addEventListener('click', favoritesGoToNextPage);
+
+displayfavoritesData();
+updatefavoritesTable();
   </script>
 </main>
