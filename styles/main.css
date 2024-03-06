@@ -590,6 +590,21 @@ main .title .option .delete:hover {
   color: #fff;
   animation: red-button-hover 0.5s forwards;
 }
+main .create-user {
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 16px 24px 16px 24px;
+  width: max-content;
+}
+main .create-user .form-group {
+  display: flex;
+}
+main .create-user .form-group input {
+  width: 100%;
+  padding: 8px 16px 8px 16px;
+  margin: 8px 16px 8px 0;
+  border-radius: 5px;
+}
 
 .hidden {
   display: none;

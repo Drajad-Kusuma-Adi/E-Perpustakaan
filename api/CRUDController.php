@@ -53,7 +53,7 @@
                 return "Request failed to send, please try again";
             }
         }
-        public function update($table, $updates) {
+        public function update($table, $updates, $id) {
             $setClause = "";
             foreach ($updates as $column => $value) {
                 if ($setClause !== "") {
@@ -64,7 +64,7 @@
                 }
                 $setClause .= "$column = $value";
             }
-            $sql = "UPDATE $table SET $setClause";
+            $sql = "UPDATE $table SET $setClause WHERE id = " . $id;
             $result = $this->conn->query($sql);
             if (!$result) {
                 return "Request failed to send, please try again";

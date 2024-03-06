@@ -7,14 +7,17 @@
   $userCount = count($users);
   if(isset($_POST['state'])) {
     $controller->createUser($_POST['username'], $_POST['password'], $_POST['level']);
-    header("Location: /e-perpustakaan?success=1");//create redirect not working
+    echo "<script>window.location.href = '/e-perpustakaan/?page=account'</script>";
+    // header("Location: /e-perpustakaan?success=1");//create redirect not working
   } elseif(isset($_POST['username'])) {
-    $controller->updateUser($_POST['username'], $_POST['password'], $_POST['level']);
-    header("Location: /e-perpustakaan?success=1");//update redirect not working
+    $controller->updateUser($_POST['id'], $_POST['username'], $_POST['password'], $_POST['level']);
+    echo "<script>window.location.href = '/e-perpustakaan/?page=account'</script>";
+    // header("Location: /e-perpustakaan?success=1");//update redirect not working
   }
   if(isset($_GET['del'])) {
     $controller->deleteUser($_GET['id']);
-    header("Location: /e-perpustakaan?success=1");//delete redirect not working
+    echo "<script>window.location.href = '/e-perpustakaan/?page=account'</script>";
+    // header("Location: /e-perpustakaan?success=1");//delete redirect not working
   }
   if(isset($_GET['upd'])) {
     $id=$controller->getUserDataById($_GET['id']);
@@ -25,6 +28,7 @@
         <h2 style="align-self: center; font-weight: 400;">E-Perpustakaan</h2>
         <br><hr><br>
         <!-- <input type="text" name="state" value="book" hidden> -->
+        <input type="hidden" name="id" value="<?=$id[0]['id']?>">
         <label for="username">Username</label>
         <div class="form-group">
           <input class="form-input" type="text" value="<?=$id[0]['username']?>" name="username" id="Username" placeholder="Masukkan username...">
@@ -154,23 +158,27 @@
     displayBorrowsData();
     updateBorrowsTable();
   </script>
-  <h1>Tambahkan Akun</h1>
-  <form method="post" style="border: 5px solid #555; border-radius: 10px; padding: 10px; width:50%">
-    <input type="text" name="state" value="user" hidden>
-    <label for="username">Username</label>
-    <div class="form-group">
-      <input class="form-input" type="text" style="width:100%" name="username" id="Username" placeholder="Masukkan username...">
-    </div>
-    <label for="password">Password</label>
-    <div class="form-group">
-      <input class="form-input" type="text" style="width:100%" name="password" id="Password" placeholder="Masukkan password...">
-    </div>
-    <label for="level">Level</label>
-    <div class="form-group">
-      <input class="form-input" type="number" style="width:100%" value="1" min="1" max="2" name="level" id="Level" placeholder="Masukkan level...">
-    </div>
-    <div style="display: flex; justify-content: center; margin-top: 10px">
-      <input class="form-button create" type="submit" value="Create">
-    </div>
-  </form>
+  <br><hr><br>
+  <h1 style="text-align: center;">Tambahkan Akun</h1>
+  <br>
+  <div style="width:100%; display: flex; justify-content: center; align-items: center;">
+    <form class="create-user" method="post">
+      <input type="text" name="state" value="user" hidden>
+      <label for="username">Username</label>
+      <div class="form-group">
+        <input class="form-input" type="text" style="width:100%" name="username" id="Username" placeholder="Masukkan username...">
+      </div>
+      <label for="password">Password</label>
+      <div class="form-group">
+        <input class="form-input" type="text" style="width:100%" name="password" id="Password" placeholder="Masukkan password...">
+      </div>
+      <label for="level">Level</label>
+      <div class="form-group">
+        <input class="form-input" type="number" style="width:100%" value="1" min="1" max="2" name="level" id="Level" placeholder="Masukkan level...">
+      </div>
+      <div style="display: flex; justify-content: center; margin-top: 10px">
+        <input class="form-button create" type="submit" value="Create">
+      </div>
+    </form>
+  </div>
 </main>

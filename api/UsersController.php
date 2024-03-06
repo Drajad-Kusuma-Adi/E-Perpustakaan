@@ -19,16 +19,18 @@ class UsersController extends CRUDController
   }
   public function createUser($username, $password, $level)
   {
-    $this->controller->create('users', 'username, password, level', "'$username', '$password', '$level'");
+    $image = file_get_contents('assets/user-placeholder.jpg');
+    $base64_image = '![IMAGE]' . base64_encode($image);
+    $this->controller->create('users', 'username, password, level, image', "'$username', '$password', '$level', '$base64_image'");
   }
-  public function updateUser($username, $password, $level)
+  public function updateUser($id, $username, $password, $level)
   {
     $data=array(
       "username" => $username,
       "password" => $password,
       "level" => $level
     );
-    $this->controller->update('users', $data);
+    $this->controller->update('users', $data, $id);
   }
   public function deleteUser($id)
   {
