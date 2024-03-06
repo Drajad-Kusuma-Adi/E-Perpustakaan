@@ -26,24 +26,30 @@ class BooksController extends CRUDController
 
         echo "<div class='books-container'>";
         foreach ($books as $book) {
-            echo "<div class='bookcard'>";
-            echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
-            echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
-            echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
-            echo "<a href='?page=$page&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Baca</button></a>";
-            echo "</div>";
+            if($state != "create") {
+                echo "<div class='bookcard'>";
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
+                echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
+                echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
+                echo "<a href='?page=$page&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Baca</button></a>";
+                echo "</div>";
+            } else {
+                echo "<div class='bookcard'>";
+                echo "<button id='createButton' style='margin: 24px;' class='create'>+Tambahkan Buku</button>";
+                echo "</div>";
+            }
         }
         echo "</div>";
     }
 
     // CRUD Operations
-    public function createBook($title, $author, $cover, $text)
+    public function createBook($title, $author, $cover, $text, $pages)
     {
-        $this->controller->create('books', 'title, author, cover, text', "'$title', '$author', '$cover', '$text");
+        $this->controller->create('books', 'title, author, cover, text, pages', "'$title', '$author', '$cover', '$text', '$pages'");
     }
-    public function updateBook($title, $author, $cover, $text)
+    public function updateBook($title, $author, $cover, $text, $pages)
     {
-        $this->controller->update('books', 'title, author, cover, text', "'$title', '$author', '$cover', '$text'");
+        $this->controller->update('books', 'title, author, cover, text, pages', "'$title', '$author', '$cover', '$text', '$pages'");
     }
     public function deleteBook($id) {
         $this->controller->delete('books', 'id', $id);

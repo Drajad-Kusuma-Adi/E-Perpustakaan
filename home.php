@@ -46,7 +46,7 @@
     elseif ($_SESSION['level'] == 2) {
       // Display list of books
       echo('<p style="color: #555">List buku-buku yang ada saat ini:</p>');
-      $controller->display_books($books);
+      $controller->display_books($books, 'book', "create");
 
       // Display books currently being borrowed
       echo('<p style="color: #555">List buku-buku yang masih dipinjam saat ini:</p>');
@@ -58,3 +58,47 @@
   }
   ?> 
 </main>
+
+<div class="create-form hidden" id="createForm">
+  <form action="api/create.php" method="post" id="createPopup">
+    <img src="assets/logo.svg" alt="logo" width="48" style="align-self: center;">
+    <h2 style="align-self: center; font-weight: 400;">E-Perpustakaan</h2>
+    <br><hr><br>
+    <label for="title">Title</label>
+    <div class="form-group">
+      <!-- <img src="assets/mail.svg" alt="mail" width="16"> -->
+      <input class="form-input" type="text" name="title" id="title" placeholder="Masukkan title...">
+    </div>
+    <label for="author">Author</label>
+    <div class="form-group">
+      <input class="form-input" type="text" name="author" id="author" placeholder="Masukkan author...">
+    </div>
+    <label for="cover">Cover</label>
+    <div class="form-group">
+      <input class="form-input" type="file" name="cover" id="cover" placeholder="Masukkan cover...">
+    </div>
+    <label for="text">Text</label>
+    <div class="form-group">
+      <input class="form-input" type="file" name="text" id="text" placeholder="Masukkan text...">
+    </div>
+    <label for="pages">Pages</label>
+    <div class="form-group">
+      <input class="form-input" type="number" name="pages" id="pages" placeholder="Masukkan pages...">
+    </div>
+    <div style="display: flex; justify-content: center;">
+      <input class="form-button create" type="submit" value="Create">
+      <input class="form-button reset" type="reset" value="Reset">
+    </div>
+  </form>
+</div>
+
+<script>
+  document.querySelector('#createButton').addEventListener('click', function() {
+    document.querySelector('#createForm').classList.remove('hidden');
+  });
+  window.onclick = function(event) {
+    if (event.target == document.querySelector('#createForm')) {
+      document.querySelector('#createForm').classList.add('hidden');
+    }
+  }
+</script>

@@ -327,6 +327,111 @@ body {
         }
     }
 }
+.create-form {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: left;
+        flex-direction: column;
+        width: fit-content;
+        padding: 24px;
+        background-color: $bgWhite;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+
+        label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: large;
+        }
+
+        div {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin-bottom: 24px;
+
+            img {
+                padding: 8px;
+                // margin: 8px;
+            }
+
+            .form-input {
+                padding: 8px;
+                // margin: 8px;
+            }
+
+            .form-button {
+                padding: 8px 24px 8px 24px;
+                margin: 16px 8px 16px 8px;
+                border-radius: 5px;
+
+                input {
+                    background-color: transparent;
+                    border: transparent;
+                }
+                input:hover {
+                    cursor: pointer;
+                }
+            }
+            .create {
+                background-color: $accentGreen;
+                animation: reverse-green-button-hover 0.5s forwards;
+                border: 1px solid black;
+                input {
+                    color: white;
+                }
+            }
+            .create:hover {
+                cursor: pointer;
+                animation: green-button-hover 0.5s forwards;
+
+                input {
+                    animation: green-button-hover 0.5s forwards;
+                }
+            }
+
+            .reset {
+                background-color: $bgWhite;
+                border: 1px solid black;
+                animation: reverse-white-button-hover 0.5s forwards;
+            }
+            .reset:hover {
+                cursor: pointer;
+                animation: white-button-hover 0.5s forwards;
+
+                input {
+                    color: white;
+                }
+            }
+        }
+
+        .form-group {
+            background-color: #fff;
+
+            img {
+                background-color: transparent;
+                border: 1px solid #555;
+                border-right: 0;
+            }
+
+            input {
+                background-color: transparent;
+                border: 1px solid #555;
+            }
+        }
+    }
+}
 
 table {
     width: 100%;

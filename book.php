@@ -153,7 +153,11 @@
 
 <script>
   setInterval(function() {
-    localStorage.setItem("timeReading", parseInt(localStorage.getItem('timeReading')) + 1);
+    if (isNaN(localStorage.getItem('timeReading'))) {
+      localStorage.setItem('timeReading', 0);
+    } else {
+      localStorage.setItem("timeReading", parseInt(localStorage.getItem('timeReading')) + 1);
+    }
   }, 1000)
 </script>
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; max-width: 100vw;">

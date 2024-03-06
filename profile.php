@@ -23,27 +23,36 @@
     </div>
     <script>
       function calculateRank() {
-        let timeReading = localStorage.getItem('timeReading');
-        if (timeReading > 3600) {
-          return "📘 Pionir Kata-kata: Kamu sudah menghabiskan beberapa waktu bersama kata-kata tertulis, dan mulai merasakan kelezatannya. Teruslah menjelajah, dan kamu akan segera terhanyut dalam dunia-dunia dan gagasan-gagasan baru!";
-        } else if (timeReading > 7200) {
-          return "📚 Eksplorator Literasi";
-        } else if (timeReading > 10800) {
-          return "📖 Penjelajah Pikiran";
-        } else if (timeReading > 14400) {
-          return "🔍 Pemikir Kritis";
-        } else if (timeReading > 18000) {
-          return "🌟 Visioner Literasi";
-        } else if (timeReading > 21600) {
-          return "🔬 Ahli Peneliti";
-        } else if (timeReading > 25200) {
-          return "🎓 Filosof Literasi";
-        } else if (timeReading > 28800) {
-          return "📚 Cendekiawan";
-        } else if (timeReading > 32400) {
-          return "🌟 Maestro Literasi";
-        } else {
-          return "📚 Pemula Sesekali";
+        const timeReading = localStorage.getItem('timeReading');
+        if (timeReading < 7200) {
+          return "📚 Pemula";
+        }
+        if (timeReading >= 7200 && timeReading < 14400) {
+          return "📘 Pionir";
+        }
+        if (timeReading >= 14400 && timeReading < 21600) {
+          return "📖 Pelajar";
+        }
+        if (timeReading >= 21600 && timeReading < 28800) {
+          return "👞 Penjelajah";
+        }
+        if (timeReading >= 28800 && timeReading < 36000) {
+          return "🔍 Pemikir";
+        }
+        if (timeReading >= 36000 && timeReading < 43200) {
+          return "🌟 Visioner";
+        }
+        if (timeReading >= 43200 && timeReading < 50400) {
+          return "🔬 Ahli";
+        }
+        if (timeReading >= 50400 && timeReading < 57600) {
+          return "🎓 Filosof";
+        }
+        if (timeReading >= 57600 && timeReading < 64800) {
+          return "🧠 Cendekiawan";
+        }
+        if (timeReading >= 64800) {
+          return "🔥 Maestro";
         }
       }
       document.querySelector('#rank').innerHTML = calculateRank();
@@ -87,7 +96,6 @@
       </tr>
     </thead>
     <tbody id="table-body">
-      <!-- Table rows will be dynamically added here -->
     </tbody>
   </table>
   <div id="pagination">

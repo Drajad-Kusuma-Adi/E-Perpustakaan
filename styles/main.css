@@ -278,6 +278,97 @@ body {
   border: 1px solid #555;
 }
 
+.create-form {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.create-form form {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  flex-direction: column;
+  width: fit-content;
+  padding: 24px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+.create-form form label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: large;
+}
+.create-form form div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.create-form form div img {
+  padding: 8px;
+}
+.create-form form div .form-input {
+  padding: 8px;
+}
+.create-form form div .form-button {
+  padding: 8px 24px 8px 24px;
+  margin: 16px 8px 16px 8px;
+  border-radius: 5px;
+}
+.create-form form div .form-button input {
+  background-color: transparent;
+  border: transparent;
+}
+.create-form form div .form-button input:hover {
+  cursor: pointer;
+}
+.create-form form div .create {
+  background-color: #10A37F;
+  animation: reverse-green-button-hover 0.5s forwards;
+  border: 1px solid black;
+}
+.create-form form div .create input {
+  color: white;
+}
+.create-form form div .create:hover {
+  cursor: pointer;
+  animation: green-button-hover 0.5s forwards;
+}
+.create-form form div .create:hover input {
+  animation: green-button-hover 0.5s forwards;
+}
+.create-form form div .reset {
+  background-color: #f9f9f9;
+  border: 1px solid black;
+  animation: reverse-white-button-hover 0.5s forwards;
+}
+.create-form form div .reset:hover {
+  cursor: pointer;
+  animation: white-button-hover 0.5s forwards;
+}
+.create-form form div .reset:hover input {
+  color: white;
+}
+.create-form form .form-group {
+  background-color: #fff;
+}
+.create-form form .form-group img {
+  background-color: transparent;
+  border: 1px solid #555;
+  border-right: 0;
+}
+.create-form form .form-group input {
+  background-color: transparent;
+  border: 1px solid #555;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
