@@ -60,10 +60,11 @@
 </main>
 
 <div class="create-form hidden" id="createForm">
-  <form action="api/create.php" method="post" id="createPopup">
+  <form action="api/create.php" method="post" id="createPopup" enctype="multipart/form-data">
     <img src="assets/logo.svg" alt="logo" width="48" style="align-self: center;">
     <h2 style="align-self: center; font-weight: 400;">E-Perpustakaan</h2>
     <br><hr><br>
+    <input type="text" name="state" value="book" hidden>
     <label for="title">Title</label>
     <div class="form-group">
       <!-- <img src="assets/mail.svg" alt="mail" width="16"> -->

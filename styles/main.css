@@ -315,6 +315,7 @@ body {
   padding: 8px;
 }
 .create-form form div .form-input {
+  width: 100%;
   padding: 8px;
 }
 .create-form form div .form-button {
@@ -463,6 +464,19 @@ main .books-container .bookcard {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   background-color: #f9f9f9;
+}
+main .books-container .bookcard .create {
+  background-color: #f9f9f9;
+  position: absolute;
+  transform: translateX(-45px) translateY(-40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: #10A37F;
+  padding: 15px 30px 15px 30px;
 }
 main .books-container .bookcard .baca {
   position: absolute;

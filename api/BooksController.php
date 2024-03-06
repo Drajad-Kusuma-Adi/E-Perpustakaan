@@ -25,19 +25,18 @@ class BooksController extends CRUDController
         }
 
         echo "<div class='books-container'>";
+        if($state == "create") {
+            echo "<div class='bookcard'>";
+            echo "<button id='createButton' style='margin: 24px;' class='create'>+Tambahkan Buku</button>";
+            echo "</div>";
+        }
         foreach ($books as $book) {
-            if($state != "create") {
-                echo "<div class='bookcard'>";
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
-                echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
-                echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
-                echo "<a href='?page=$page&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Baca</button></a>";
-                echo "</div>";
-            } else {
-                echo "<div class='bookcard'>";
-                echo "<button id='createButton' style='margin: 24px;' class='create'>+Tambahkan Buku</button>";
-                echo "</div>";
-            }
+            echo "<div class='bookcard'>";
+            echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
+            echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
+            echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
+            echo "<a href='?page=$page&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Baca</button></a>";
+            echo "</div>";
         }
         echo "</div>";
     }
