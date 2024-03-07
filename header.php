@@ -22,7 +22,15 @@
                 case 2: ?>
                     <div class="dropdown">
                         <div>
-                            <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($_SESSION['image']) . '" width="200" height="300"/>' ?>
+                        <?php
+                            $image = base64_encode($_SESSION['image']);
+                            $image = base64_decode($image);
+                            if ($_SESSION['image'] == $image) {
+                                $image = $_SESSION['image'];
+                            } else {
+                                $image = base64_encode($_SESSION['image']);
+                            }
+                            echo '<img src="data:image/jpeg;base64,' . $image . '" width="200" height="300"/>' ?>
                             <button onclick="openDropdown()" class="dropdown-button" id="dropdown-button"><img src="assets/arrow.svg" alt="arrow"></button>
                         </div>
                         <ul id="dropdown-content" style="margin-top: 240px;" class="dropdown-content hidden">
@@ -51,7 +59,15 @@
                 case 1: ?>
                     <div class="dropdown" style="margin: 24px;">
                         <div>
-                            <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($_SESSION['image']) . '" width="200" height="300"/>' ?>
+                        <?php
+                            $image = base64_encode($_SESSION['image']);
+                            $image = base64_decode($image);
+                            if ($_SESSION['image'] == $image) {
+                                $image = $_SESSION['image'];
+                            } else {
+                                $image = base64_encode($_SESSION['image']);
+                            }
+                            echo '<img src="data:image/jpeg;base64,' . $image . '" width="200" height="300"/>' ?>
                             <button onclick="openDropdown()" class="dropdown-button" id="dropdown-button"><img src="assets/arrow.svg" alt="arrow"></button>
                         </div>
                         <ul id="dropdown-content" style="margin-top: 160px;" class="dropdown-content hidden">

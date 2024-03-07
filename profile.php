@@ -16,7 +16,27 @@
   $favoritesCount = count($favoritedBooks);
   ?>
   <div class="main-profile">
-    <img src="data:image/jpeg;base64,<?= base64_encode($image) ?>" alt="profile image" class="profile-image">
+  <form action="api/uploadProfilePhoto.php" method="post" enctype="multipart/form-data" id="uploadProfilePhoto">
+    <label>
+      <img src="data:image/jpeg;base64,<?php
+      $base64_image = base64_encode($image);
+      if ($base64_image == $image) {
+        $image = $base64_image;
+      } else {
+        $image = $image;
+      }
+      echo $image;
+      ?>" alt="profile image" class="profile-image">
+      <input type="file" name="image" id="image" style="display: none;">
+    </label>
+  </form>
+  <script>
+    document.querySelector("#uploadProfilePhoto").addEventListener("change", function(event) {
+      setTimeout(function() {
+        document.querySelector("#uploadProfilePhoto").submit();
+      }, 100);
+    });
+  </script>
     <div>
       <h1 class="profile-username"><?= $username ?></h1>
       <p id="rank"></p>
@@ -114,7 +134,7 @@
           id: '" . $data[0]['id'] . "',
           title: '" . $data[0]['title'] . "',
           author: '" . $data[0]['author'] . "',
-          cover: '" . base64_encode($data[0]['cover']) . "'
+          cover: '" . ($data[0]['cover']) . "'
         },
       ";
     }
@@ -221,7 +241,7 @@ updateBorrowsTable();
           id: '" . $data[0]['id'] . "',
           title: '" . $data[0]['title'] . "',
           author: '" . $data[0]['author'] . "',
-          cover: '" . base64_encode($data[0]['cover']) . "'
+          cover: '" . ($data[0]['cover']) . "'
         },
       ";
     }

@@ -19,7 +19,7 @@
   }
   if(isset($_POST['delete'])){
     $controller->deleteBook($book[0]['id']);
-    header("Location: /e-perpustakaan");//delete redirect not working
+    echo "<script>window.location.href = '/e-perpustakaan'</script>";
   }
   ?>
   <style>
@@ -112,14 +112,14 @@
         </div>
       <?php } ?>
     <?php } ?>
-    <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($book[0]['cover']) . '" width="50" height="75"/>'; ?>
+    <?php echo '<img src="data:image/jpeg;base64,' . $book[0]['cover'] . '" width="50" height="75"/>'; ?>
     <h1><?=$book[0]['title']?></h1>
     <p style='color: #555'><?=$book[0]['author']?></p>
   </div>
   <hr color="black">
   <br>
   <?php
-  $pdf = base64_encode($book[0]['text']);
+  $pdf = $book[0]['text'];
   ?>
 <script src="https://mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
 
@@ -171,7 +171,7 @@
   if (isset($_SESSION['id'])) {
     $sql = "SELECT * FROM borrows WHERE book_id = " . $book[0]['id'] . " AND user_id = " . $_SESSION['id'];
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0 || $_SESSION['level'] == 2) {
       for ($i = 1; $i <= $book[0]['pages']; $i++) {
         echo '<canvas id="page_' . $i . '"></canvas>';
       }

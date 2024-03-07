@@ -49,6 +49,7 @@ date_default_timezone_set("Asia/Jakarta");
             include "home.php";
         }
     }
+    include "footer.php";
     ?>
     <title><?= $title ?></title>
 </body>

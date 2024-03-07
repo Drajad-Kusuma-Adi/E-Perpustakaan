@@ -35,14 +35,14 @@ class BooksController extends CRUDController
                 $bookid=$this->controller->readByValue('borrows', 'book_id', $book['id'], null);
                 $userid=$this->controller->readByValue('users', 'id', $bookid[0]['user_id'], null);
                 echo "<div class='bookcard'>";
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
+                echo '<img src="data:image/jpeg;base64,' . ($book['cover']) . '" width="200" height="300"/><br>';
                 echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
                 echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
                 echo "<a href='?kbl&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Kembalikan<br>(dipinjam oleh ".$userid[0]['username'].")</button></a>";
                 echo "</div>";
             } else {
                 echo "<div class='bookcard'>";
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($book['cover']) . '" width="200" height="300"/><br>';
+                echo '<img src="data:image/jpeg;base64,' . ($book['cover']) . '" width="200" height="300"/><br>';
                 echo "<h3 style='margin-top: 5px'>" . htmlspecialchars($book['title']) . "</h3>";
                 echo "<p style='color: #555'>" . htmlspecialchars($book['author']) . "</p><br>";
                 echo "<a href='?page=$page&id=" . htmlspecialchars($book['id']) . "'><button class='baca'>Baca</button></a>";

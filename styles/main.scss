@@ -498,6 +498,16 @@ table {
     }
 }
 
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+}
+.profile-image:hover {
+    cursor: pointer;
+    opacity: 50%;
+}
+
 .main-profile {
     display: flex;
     flex-wrap: wrap;

@@ -19,9 +19,8 @@ class UsersController extends CRUDController
   }
   public function createUser($username, $password, $level)
   {
-    $image = file_get_contents('assets/user-placeholder.jpg');
-    $base64_image = '![IMAGE]' . base64_encode($image);
-    $this->controller->create('users', 'username, password, level, image', "'$username', '$password', '$level', '$base64_image'");
+    $image = base64_encode(file_get_contents('assets/user-placeholder.jpg'));
+    $this->controller->create('users', 'username, password, level, image', "'$username', '$password', '$level', '$image'");
   }
   public function updateUser($id, $username, $password, $level)
   {
@@ -31,6 +30,10 @@ class UsersController extends CRUDController
       "level" => $level
     );
     $this->controller->update('users', $data, $id);
+  }
+  public function updateProfilePhoto($id, $image) {
+    $sql = "UPDATE users SET image = '$image' WHERE id = $id";
+    $this->conn->query($sql);
   }
   public function deleteUser($id)
   {
